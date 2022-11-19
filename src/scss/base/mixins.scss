@@ -1,0 +1,59 @@
+//Подключение шрифта
+@mixin font($font_name, $file_name, $weight, $style) {
+	@font-face {
+		font-family: $font_name;
+		font-display: swap;
+		src: url("../fonts/#{$file_name}.woff2") format("woff2"), url("../fonts/#{$file_name}.woff") format("woff");
+		font-weight: #{$weight};
+		font-style: #{$style};
+	}
+}
+//REM
+@function rem($px) {
+	$result: math.div($px, 16) + rem;
+	@return $result;
+}
+//EM
+@function em($px) {
+	$result: math.div($px, 16) + em;
+	@return $result;
+}
+//Адаптивное свойство
+@mixin adaptiveValue($property, $startSize, $minSize, $widthFrom: $containerWidth, $widthTo: $minWidth, $keepSize: 0) {
+	$addSize: $startSize - $minSize;
+	$minSizeValue: $minSize + px;
+	$startSizeValue: $startSize + px;
+	$widthFromMedia: em($widthFrom);
+	$widthToMedia: em($widthTo);
+
+	// Если размер шрифта переводим в REM
+	@if $property == "font-size" {
+		$minSizeValue: math.div($minSize, 16) + rem;
+		$startSizeValue: math.div($startSize, 16) + rem;
+	}
+	// Если указано ограничение у контейнера, либо указана стартовая или конечная ширина
+	// включаем режим работы в промежутке ширин
+	@if ($maxWidthContainer > 0 or $widthFrom != $containerWidth or $widthTo != $minWidth) and $widthFrom > $widthTo {
+		// Если стартовая ширина равна ширине контейнера + отступы, или указана настройка "keepSize"
+		// ставим значение по умолчанию
+		@if $widthFrom == $containerWidth or $keepSize > 0 {
+			@media (min-width: $widthFromMedia) {
+				#{$property}: $startSizeValue;
+			}
+		}
+		// Адаптируем размер в промежутке между указанными ширинами вьюпорта
+		@media (min-width: $widthToMedia) and (max-width: $widthFromMedia) {
+			#{$property}: calc(#{$minSizeValue} + #{$addSize} * (((100vw - #{$widthTo + px})) / ((#{$widthFrom - $widthTo}))));
+		}
+		// Если конечная ширина равна минимальной ширине или указана настройка "keepSize"
+		// значение по минимального размера
+		@if $widthTo == $minWidth or $keepSize > 0 {
+			@media (max-width: $widthToMedia) {
+				#{$property}: $minSizeValue;
+			}
+		}
+	} @else {
+		// По всей ширине вьюпорта
+		#{$property}: calc(#{$minSizeValue} + #{$addSize} * (((100vw - #{$widthTo + px})) / ((#{$maxWidth - $widthTo}))));
+	}
+}

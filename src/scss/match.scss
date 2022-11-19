@@ -1,0 +1,49 @@
+.about {
+
+    // .about__container
+
+    &__container {
+        background: $backgroundColor;
+    }
+
+    // .about__body
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0px 0px rem(69) 0px;
+    }
+
+    // .about__text
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        font-weight: 400;
+        line-height: rem(21);
+        color: $textColor;
+        gap: rem(20);
+        padding: rem(37) rem(5) rem(200) rem(5);
+
+    }
+
+    // .about__btn
+
+&__button {
+    font-weight: 700;
+    font-size: rem(24);
+    line-height: rem(28);
+    display: inline-block;
+    color: $textColor;
+    max-width: 100%;
+    text-align: center;
+    background: linear-gradient(269deg, #D90000 -1.25%, #BE0000 100.62%);
+    box-shadow: 0px 9px 19px rgba(0, 0, 0, 0.81);
+    border-radius: rem(9);
+    height: rem(65);
+    width: rem(241);
+    @include adaptiveValue("width", 241, 191, 400, 320);
+}
+}

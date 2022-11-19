@@ -1,0 +1,76 @@
+//====================================================================================================
+
+//====================================================================================================
+
+//Burger
+
+.icon-menu {
+		display: block;
+		position: relative;
+		width: rem(30);
+		height: rem(18);
+		cursor: pointer;
+		z-index: 5;
+		span,
+		&::before,
+		&::after {
+			content: "";
+			transition: all 0.3s ease 0s;
+			left: 0px;
+			position: absolute;
+			width: rem(24);
+			height: rem(3);
+			border-radius: rem(5);
+			background-color: $textColor;
+		}
+		&::before {
+			top: 0px;
+		}
+		&::after {
+			bottom: 0px;
+		}
+		span {
+			top: calc(50% - 1px);
+		}
+		.menu-open & {
+			span {
+				transform: scale(0);
+			}
+			&::before {
+				transform: rotate(-45deg);
+				top: calc(50% - 1px);
+			}
+			&::after {
+				transform: rotate(45deg);
+				bottom: calc(50% - 1px);
+			}
+		}
+	
+}
+
+.header {
+
+	// .header__container
+
+	&__container {
+		
+		background: $containerColor;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px -1px 0px rgba(255, 255, 255, 0.25);
+	}
+
+	// .header__menu
+
+	&__menu {
+		max-width: 100%;
+		padding: rem(28) 0px rem(28) rem(8);
+	}
+}
+.menu {
+
+	// .menu__icon
+
+	&__icon {
+	}
+}
+.icon-menu {
+}
